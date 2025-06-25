@@ -24,21 +24,35 @@
     </button>
   </div>
 
+
+  <!-- PDF -->
+
   <div id="contentToConvert" class="invoice-box" style="display:flex;align-items: center;justify-content: center;height: 100vh;">
   <!-- Your dynamic content goes here -->
     <table style="width: 100%;" cellpadding="0" cellspacing="0">
       <tbody>
       <tr class="top_rw">
-        <td colspan="2">
-          <h2 style="margin-bottom: 0px;">DALKIA</h2>
-          <span style="">Numéro: xxx-xxx</span>
+        <td colspan="1">
+          <img mat-card-image src="assets/img/logo-dalkia.jpg">
+          
         </td>
-        <td style="width:30px; margin-right: 10px;">
+        <td colspan="2">
+         <span>Numéro: xxx-xxx</span>
+        </td>
+      </tr>
+      <tr class="top_rw">
+        <td colspan="1">
+          <span>Numéro: xxx-xxx</span>
+        </td>
+        <td colspan="1">
+          Date: {{ currentDate }}
+        </td>
+        <td colspan="1">
           Date: {{ currentDate }}
         </td>
       </tr>
       <tr class="top">
-        <td colspan="3">
+        <td colspan="1">
           Nom :   {{ selectedOption }}
         </td>
       </tr>
