@@ -1,13 +1,49 @@
 
 <div style="display:flex;align-items: center;justify-content: center;height: 100vh; ">
-  <div id="form" class="form-info" style="">
+  <div id="form" class="form-info" style="width: 250px;">
     <mat-form-field>
-      <mat-label>Employé</mat-label>
-      <mat-select [(ngModel)]="selectedOption" class="form-control">
-        <mat-option value="André Stoclin">André Stoclin</mat-option>
-        <mat-option value="Louis Stoclin">Louis Stoclin</mat-option>
-        <mat-option value="Tom Kernoa">Tom Kernoa</mat-option>
+      <mat-label>Techniciens</mat-label>
+      <mat-select multiple [(ngModel)]="selectedTech">
+        @for (tech of techList; track tech) {
+          <mat-option [value]="tech">{{tech}}</mat-option>
+        }
       </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="selectedType">
+        @for (type of typesList; track type) {
+          <mat-option [value]="type">{{type}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Travaux prévus</mat-label>
+      <mat-date-range-input [rangePicker]="pickerRanged">
+        <input matStartDate [(ngModel)]="dateStart" placeholder="Start date">
+        <input matEndDate [(ngModel)]="dateEnd" placeholder="End date">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="pickerRanged"></mat-datepicker-toggle>
+      <mat-date-range-picker #pickerRanged></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Date du jour</mat-label>
+      <input matInput [(ngModel)]="currentDate" [matDatepicker]="picker">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>PDP numéro</mat-label>
+      <input matInput placeholder="PDP" [(ngModel)]="pdpNumber">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Lieu d'intervention</mat-label>
+      <input matInput placeholder="Lieu d'intervention" [(ngModel)]="interventionPlace">
     </mat-form-field>
 
     <mat-form-field>
@@ -28,38 +64,68 @@
   <!-- PDF -->
 
   <div id="contentToConvert" class="invoice-box" style="display:flex;align-items: center;justify-content: center;height: 1100px;">
-  <!-- Your dynamic content goes here -->
+    <!-- Your dynamic content goes here -->
     <table style="width: 100%;" cellpadding="0" cellspacing="0">
       <tbody>
-      <tr class="top_rw">
-        <td colspan="4">
-          <mat-grid-list cols="4" rowHeight="2:1">
-              <mat-grid-tile colspan="1">
-                <img class="logo" mat-card-image src="assets/img/logo-dalkia.jpg">                
-              </mat-grid-tile>
-              <mat-grid-tile class="type" colspan="3" style="background-color: #4472C4; color:white; text-align: center;">
-                <h1 >{{ selectedType }}</h1>                
-              </mat-grid-tile>
-            </mat-grid-list>
-        </td>
-       
-      </tr>
-      <tr class="top_rw">
-        <mat-grid-list cols="3" rowHeight="2:1">
-              <mat-grid-tile colspan="1">
-                <img class="img-rules" mat-card-image src="assets/img/rules-1-2.png">                
-              </mat-grid-tile>
-             <mat-grid-tile colspan="1">
-                <img class="img-rules" mat-card-image src="assets/img/rules-3-4.png">                
-              </mat-grid-tile>
-              <mat-grid-tile colspan="1">
-                <img class="img-rules" mat-card-image src="assets/img/rules-5-6.png">                
-              </mat-grid-tile>
-            </mat-grid-list>
-      </tr>
-      <tr class="top">
-          <td colspan="3">
+        <tr class="top_rw">
+          <td colspan="4">
             <mat-grid-list cols="4" rowHeight="2:1">
+                <mat-grid-tile colspan="1">
+                  <img class="logo" mat-card-image src="assets/img/logo-dalkia.jpg">                
+                </mat-grid-tile>
+                <mat-grid-tile class="type" colspan="3" style="background-color: #4472C4; color:white; text-align: center;">
+                  <h1 >{{ selectedType }}</h1>                
+                </mat-grid-tile>
+              </mat-grid-list>
+           </td>
+        </tr>
+        <tr class="top_rw">
+          <td>
+            <mat-grid-list cols="3" rowHeight="2:1">
+              <mat-grid-tile colspan="1">
+                  <img class="img-rules" mat-card-image src="assets/img/rules-1-2.png">                
+                </mat-grid-tile>
+              <mat-grid-tile colspan="1">
+                  <img class="img-rules" mat-card-image src="assets/img/rules-3-4.png">                
+              </mat-grid-tile>
+              <mat-grid-tile colspan="1">
+                  <img class="img-rules" mat-card-image src="assets/img/rules-5-6.png">                
+              </mat-grid-tile>
+            </mat-grid-list>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-grid-list cols="4" rowHeight="18px">
+              <mat-grid-tile colspan="3" class="grid-left">
+                Travaux prévus du {{ dateStart | date:'dd/MM/YYY' }} au {{ dateEnd | date:'dd/MM/YYY' }}
+              </mat-grid-tile>
+              <mat-grid-tile class="type" colspan="1" class="grid-right">
+                Date : {{ dateStart | date:'dd/MM/YYY' }}           
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="4" rowHeight="18px">
+              <mat-grid-tile colspan="3" class="grid-left">
+                Technicien(s) : <span> {{selectedTech.join(', ')}} </span>
+              </mat-grid-tile>
+              <mat-grid-tile class="type" colspan="1" class="grid-right">
+                PDP numéro : {{ pdpNumber }}       
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="4" rowHeight="18px">
+              <mat-grid-tile colspan="3" class="grid-left">
+              </mat-grid-tile>
+              <mat-grid-tile class="type" colspan="1" class="grid-right">
+                Lieu d'intervention : {{ interventionPlace }}     
+              </mat-grid-tile>
+            </mat-grid-list>
+          </td>
+        </tr>
+        
+        <tr class="top">
+          <td colspan="3" style="text-align: center; padding-top: 10px;">
+            <mat-grid-list cols="4" rowHeight="140px">
               @for (tool of selectedTools; track tool) {
               <mat-grid-tile>
                 <mat-card class="example-card" appearance="outlined">
@@ -67,15 +133,7 @@
                     <mat-card-title>{{ tool }}</mat-card-title>
                   </mat-card-header>
                   <img class="img-tools" mat-card-image src="assets/tools/{{ tool }}.jpg">
-                  <mat-card-content>
-                   
-                  </mat-card-content>
-                  <mat-card-actions>
-                    
-                  </mat-card-actions>
                 </mat-card>
-
-                
               </mat-grid-tile>
               }
             </mat-grid-list>

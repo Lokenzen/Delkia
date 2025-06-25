@@ -2,6 +2,25 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
 .mat-grid-tile-content {
     position: relative !important;
+}
+.mat-mdc-card-outlined {
+  background-color: white !important;
+}
+.mat-mdc-card-header{
+    padding-top: 5px !important;
+}
+
+.grid-left{
+    justify-content: inherit;
+    display: flex !important;
+    text-align: left;
+}
+.grid-right{
+    justify-content: inherit;
+    display: flex !important;
+    text-align: right;
 }

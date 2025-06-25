@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import jspdf, { jsPDF } from 'jspdf';  
 import html2canvas from 'html2canvas';
@@ -11,6 +11,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
+import {DateAdapter, MAT_DATE_FORMATS, provideNativeDateAdapter} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { GRI_DATE_FORMATS } from './core/helpers/date-format';
+import { MatInputModule } from '@angular/material/input';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-root',
@@ -23,25 +28,44 @@ import {MatCardModule} from '@angular/material/card';
     MatSelectModule,
     MatFormFieldModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatDividerModule
+  ],
+  providers: [provideNativeDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: GRI_DATE_FORMATS }
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 
-export class AppComponent  {
+export class AppComponent implements OnInit {
+
   name = 'Delkia';
 
-  currentDate = new Date().toLocaleDateString();
-  selectedOption = 'André Stoclin';
+  currentDate = new Date();
+  dateStart = new Date();
+  dateEnd = new Date();
+  techList = ['André Stoclin', 'Tom Kernoa', 'Jean Dupont', 'Albert Einstein'];
+  selectedTech = ['André Stoclin']; 
   toppings = new FormControl('');
   toolsList: string[] = ['Gants', 'Casque', 'Veste', 'Marteau', 'Pince', 'Tournevis', 'Clé à molette', 'Scie', 'Perceuse', 'Lunettes de sécurité', 'Bottes de sécurité', 'Gilet de sécurité'];
   selectedTools: string[] = [];
   typesList: string[] = ['Mode opératoire'];
   selectedType = 'Mode opératoire';
+  interventionPlace = '';
+  pdpNumber = '';
 
- generatePDF() {
-  const data = document.getElementById('contentToConvert');
+  constructor(private readonly adapter: DateAdapter<Date>) {}
+            
+  ngOnInit(): void {
+    
+    this.adapter.setLocale('fr-FR'); // Set the locale to French  
+  }
+
+  generatePDF() {
+    const data = document.getElementById('contentToConvert');
     
     console.log(data);
     if(data !== null) {
