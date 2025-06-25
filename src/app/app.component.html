@@ -1,0 +1,72 @@
+
+<div style="display:flex;align-items: center;justify-content: center;height: 100vh; ">
+  <div id="form" class="form-info" style="">
+    <mat-form-field>
+      <mat-label>Employé</mat-label>
+      <mat-select [(ngModel)]="selectedOption" class="form-control">
+        <mat-option value="André Stoclin">André Stoclin</mat-option>
+        <mat-option value="Louis Stoclin">Louis Stoclin</mat-option>
+        <mat-option value="Tom Kernoa">Tom Kernoa</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Outils</mat-label>
+      <mat-select multiple [(ngModel)]="selectedTools">
+        @for (tool of toolsList; track tool) {
+          <mat-option [value]="tool">{{tool}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button (click)="generatePDF()" matFab aria-label="Example icon button with a delete icon">
+        <mat-icon>download</mat-icon>
+    </button>
+  </div>
+
+  <div id="contentToConvert" class="invoice-box" style="display:flex;align-items: center;justify-content: center;height: 100vh;">
+  <!-- Your dynamic content goes here -->
+    <table style="width: 100%;" cellpadding="0" cellspacing="0">
+      <tbody>
+      <tr class="top_rw">
+        <td colspan="2">
+          <h2 style="margin-bottom: 0px;">DALKIA</h2>
+          <span style="">Numéro: xxx-xxx</span>
+        </td>
+        <td style="width:30px; margin-right: 10px;">
+          Date: {{ currentDate }}
+        </td>
+      </tr>
+      <tr class="top">
+        <td colspan="3">
+          Nom :   {{ selectedOption }}
+        </td>
+      </tr>
+      <tr class="top">
+          <td>
+            <mat-grid-list cols="4" rowHeight="2:1">
+              @for (tool of selectedTools; track tool) {
+              <mat-grid-tile>
+                <mat-card class="example-card" appearance="outlined">
+                  <mat-card-header>
+                    <mat-card-title>{{ tool }}</mat-card-title>
+                  </mat-card-header>
+                  <img mat-card-image src="assets/tools/{{ tool }}.jpg">
+                  <mat-card-content>
+                   
+                  </mat-card-content>
+                  <mat-card-actions>
+                    
+                  </mat-card-actions>
+                </mat-card>
+
+                
+              </mat-grid-tile>
+              }
+            </mat-grid-list>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
