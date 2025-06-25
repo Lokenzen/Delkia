@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/delkia',
+  basePath: '/Delkia',
   supportedLocales: {
   "en-US": ""
 },
