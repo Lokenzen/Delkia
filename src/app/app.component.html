@@ -27,37 +27,38 @@
 
   <!-- PDF -->
 
-  <div id="contentToConvert" class="invoice-box" style="display:flex;align-items: center;justify-content: center;height: 100vh;">
+  <div id="contentToConvert" class="invoice-box" style="display:flex;align-items: center;justify-content: center;height: 1100px;">
   <!-- Your dynamic content goes here -->
     <table style="width: 100%;" cellpadding="0" cellspacing="0">
       <tbody>
       <tr class="top_rw">
-        <td colspan="1">
-          <img mat-card-image src="assets/img/logo-dalkia.jpg">
-          
+        <td colspan="4">
+          <mat-grid-list cols="4" rowHeight="2:1">
+              <mat-grid-tile colspan="1">
+                <img class="logo" mat-card-image src="assets/img/logo-dalkia.jpg">                
+              </mat-grid-tile>
+              <mat-grid-tile class="type" colspan="3" style="background-color: #4472C4; color:white; text-align: center;">
+                <h1 >{{ selectedType }}</h1>                
+              </mat-grid-tile>
+            </mat-grid-list>
         </td>
-        <td colspan="2">
-         <span>Numéro: xxx-xxx</span>
-        </td>
+       
       </tr>
       <tr class="top_rw">
-        <td colspan="1">
-          <span>Numéro: xxx-xxx</span>
-        </td>
-        <td colspan="1">
-          Date: {{ currentDate }}
-        </td>
-        <td colspan="1">
-          Date: {{ currentDate }}
-        </td>
+        <mat-grid-list cols="3" rowHeight="2:1">
+              <mat-grid-tile colspan="1">
+                <img class="img-rules" mat-card-image src="assets/img/rules-1-2.png">                
+              </mat-grid-tile>
+             <mat-grid-tile colspan="1">
+                <img class="img-rules" mat-card-image src="assets/img/rules-3-4.png">                
+              </mat-grid-tile>
+              <mat-grid-tile colspan="1">
+                <img class="img-rules" mat-card-image src="assets/img/rules-5-6.png">                
+              </mat-grid-tile>
+            </mat-grid-list>
       </tr>
       <tr class="top">
-        <td colspan="1">
-          Nom :   {{ selectedOption }}
-        </td>
-      </tr>
-      <tr class="top">
-          <td>
+          <td colspan="3">
             <mat-grid-list cols="4" rowHeight="2:1">
               @for (tool of selectedTools; track tool) {
               <mat-grid-tile>
@@ -65,7 +66,7 @@
                   <mat-card-header>
                     <mat-card-title>{{ tool }}</mat-card-title>
                   </mat-card-header>
-                  <img mat-card-image src="assets/tools/{{ tool }}.jpg">
+                  <img class="img-tools" mat-card-image src="assets/tools/{{ tool }}.jpg">
                   <mat-card-content>
                    
                   </mat-card-content>
@@ -78,8 +79,8 @@
               </mat-grid-tile>
               }
             </mat-grid-list>
-        </td>
-      </tr>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

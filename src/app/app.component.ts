@@ -37,9 +37,10 @@ export class AppComponent  {
   toppings = new FormControl('');
   toolsList: string[] = ['Gants', 'Casque', 'Veste', 'Marteau', 'Pince', 'Tournevis', 'Clé à molette', 'Scie', 'Perceuse', 'Lunettes de sécurité', 'Bottes de sécurité', 'Gilet de sécurité'];
   selectedTools: string[] = [];
+  typesList: string[] = ['Mode opératoire'];
+  selectedType = 'Mode opératoire';
 
  generatePDF() {
-  console.log('test');
   const data = document.getElementById('contentToConvert');
     
     console.log(data);
