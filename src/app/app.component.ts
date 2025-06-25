@@ -16,6 +16,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { GRI_DATE_FORMATS } from './core/helpers/date-format';
 import { MatInputModule } from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider';
+import * as constants from './core/constants/const';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ import {MatDividerModule} from '@angular/material/divider';
     MatCardModule,
     MatDatepickerModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
   ],
   providers: [provideNativeDateAdapter(),
     { provide: MAT_DATE_FORMATS, useValue: GRI_DATE_FORMATS }
@@ -47,13 +48,17 @@ export class AppComponent implements OnInit {
   currentDate = new Date();
   dateStart = new Date();
   dateEnd = new Date();
-  techList = ['André Stoclin', 'Tom Kernoa', 'Jean Dupont', 'Albert Einstein'];
-  selectedTech = ['André Stoclin']; 
+
+  techList = constants.techniciens;
+  selectedTech: string[] = [constants.techniciens[0]];
+
   toppings = new FormControl('');
-  toolsList: string[] = ['Gants', 'Casque', 'Veste', 'Marteau', 'Pince', 'Tournevis', 'Clé à molette', 'Scie', 'Perceuse', 'Lunettes de sécurité', 'Bottes de sécurité', 'Gilet de sécurité'];
+  toolsList: string[] = constants.tools;
   selectedTools: string[] = [];
-  typesList: string[] = ['Mode opératoire'];
+
+  typesList: string[] = constants.types;
   selectedType = 'Mode opératoire';
+
   interventionPlace = '';
   pdpNumber = '';
 
