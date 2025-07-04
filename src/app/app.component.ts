@@ -17,6 +17,19 @@ import { GRI_DATE_FORMATS } from './core/helpers/date-format';
 import { MatInputModule } from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider';
 import * as constants from './core/constants/const';
+import {ChangeDetectionStrategy, inject, model, signal} from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { Operation } from './core/models/operation';
+import { NewOperationComponent } from './component/new-operation/new-operation.component';
+import {CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +46,8 @@ import * as constants from './core/constants/const';
     MatDatepickerModule,
     MatInputModule,
     MatDividerModule,
+    CdkDropList, 
+    CdkDrag
   ],
   providers: [provideNativeDateAdapter(),
     { provide: MAT_DATE_FORMATS, useValue: GRI_DATE_FORMATS }
@@ -62,6 +77,10 @@ export class AppComponent implements OnInit {
   interventionPlace = '';
   pdpNumber = '';
 
+  ops: Operation[] = [];
+  
+  readonly dialog = inject(MatDialog);
+
   constructor(private readonly adapter: DateAdapter<Date>) {}
             
   ngOnInit(): void {
@@ -89,5 +108,52 @@ export class AppComponent implements OnInit {
         pdf.save('Delkia' + this.currentDate +'.pdf'); // Generated PDF
       });
     }
+  }
+
+  addOp(): void {
+    const operation = {
+      rank: this.ops.length + 1,
+      name: '',
+      manipulation: [],
+      prevention: '',
+    } as Operation;
+
+    const dialogRef = this.dialog.open(NewOperationComponent, {
+      data: operation 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result !== undefined) {
+        this.ops.push(result);
+        //this.ops.sort((a, b) => a.rank - b.rank);
+        console.log(this.ops);
+      }
+    });
+  }
+
+  editOp(operation: Operation): void {
+    const dialogRef = this.dialog.open(NewOperationComponent, {
+      data: operation 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result !== undefined) {
+        const index = this.ops.findIndex(op => op.rank === result.rank);
+        if (index !== -1) {
+          this.ops[index] = result; // Update the operation in the list
+        } else {
+          console.error('Operation not found in the list');
+        }
+        //this.ops.push(result);
+        //this.ops.sort((a, b) => a.rank - b.rank);
+        console.log(this.ops);
+      }
+    });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.ops, event.previousIndex, event.currentIndex);
   }
 }

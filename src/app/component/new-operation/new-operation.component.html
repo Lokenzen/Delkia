@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Hi </h2>
+<mat-dialog-content>
+  <p>Opération</p>
+  <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="currentOperation">
+        @for (operation of listOperations; track operation) {
+          <mat-option [value]="operation">{{operation.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Opération name</mat-label>
+    <input matInput [(ngModel)]="currentOperation.name" />
+  </mat-form-field>
+  
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="onNoClick()">No Thanks</button>
+  <button matButton (click)="confirm()" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

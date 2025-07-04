@@ -14,6 +14,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding-top: 5px !important;
 }
 
+.mat-mdc-card-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
 .grid-left{
     justify-content: inherit;
     display: flex !important;

@@ -33,8 +33,8 @@ button{
 }
 
 .img-tools {
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
 }
 .img-rules{
     width: 250px;
@@ -50,4 +50,50 @@ button{
 }
 mat-grid-tile{
     padding-top: 0 !important;
+}
+
+li {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    line-height: 18px;
+}
+ul {
+    overflow-x:hidden;
+    display: inline-block;
+    margin-top: 3px;
+    margin-left: 5px;
+    padding: 0;
+    vertical-align: top;
+}
+
+li {
+    //display:inline;
+}
+
+label {
+    display: inline-block;
+    vertical-align: top;
+}
+
+td.top_align_rw {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.align_div {
+    display: block;
+}
+
+.table_operations {
+    border: 2px solid;
+}
+
+.table_td_operations {
+    border-left: 1px solid;
+    border-top: 1px solid;
 }

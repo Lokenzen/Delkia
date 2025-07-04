@@ -55,6 +55,15 @@
       </mat-select>
     </mat-form-field>
 
+    <button matButton="elevated" (click)="addOp()">Ajoutez une Op</button>
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      @for (op of ops; track op) {
+        <div cdkDrag>
+          <button matButton="elevated" (click)="editOp(op)">{{op.rank}} - {{op.name}}</button>
+        </div>
+      }
+    </div>
+
     <button (click)="generatePDF()" matFab aria-label="Example icon button with a delete icon">
         <mat-icon>download</mat-icon>
     </button>
@@ -83,7 +92,7 @@
            </td>
         </tr>
         <tr class="top_rw">
-          <td>
+          <td colspan="2">
             <mat-grid-list cols="3" rowHeight="2:1">
               <mat-grid-tile colspan="1">
                   <img class="img-rules" mat-card-image src="assets/img/rules-1-2.png">                
@@ -98,37 +107,34 @@
           </td>
         </tr>
 
-        <tr>
-          <td>
-            <mat-grid-list cols="4" rowHeight="18px">
-              <mat-grid-tile colspan="3" class="grid-left">
-                Travaux prévus du {{ dateStart | date:'dd/MM/YYY' }} au {{ dateEnd | date:'dd/MM/YYY' }}
-              </mat-grid-tile>
-              <mat-grid-tile class="type" colspan="1" class="grid-right">
-                Date : {{ dateStart | date:'dd/MM/YYY' }}           
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="18px">
-              <mat-grid-tile colspan="3" class="grid-left">
-                Technicien(s) : <span> {{selectedTech.join(', ')}} </span>
-              </mat-grid-tile>
-              <mat-grid-tile class="type" colspan="1" class="grid-right">
-                PDP numéro : {{ pdpNumber }}       
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="18px">
-              <mat-grid-tile colspan="3" class="grid-left">
-              </mat-grid-tile>
-              <mat-grid-tile class="type" colspan="1" class="grid-right">
-                Lieu d'intervention : {{ interventionPlace }}     
-              </mat-grid-tile>
-            </mat-grid-list>
+        <tr style="height: 150px;">
+          <td style="width:450px;" class="top_align_rw">
+            <div class="align_div">
+              <span>Travaux prévus du {{ dateStart | date:'dd/MM/YYY' }} au {{ dateEnd | date:'dd/MM/YYY' }}</span>
+            </div>
+            <div class="align_div">
+              <label>Technicien(s) :</label> 
+                <ul>
+                  <li *ngFor="let tech of selectedTech">{{ tech }}</li>
+                </ul>
+            </div>
+          </td>
+          <td style="width:300px;" class="top_align_rw">
+            <div class="align_div">
+              <span>Date : {{ dateStart | date:'dd/MM/YYY' }}</span>
+            </div>
+            <div class="align_div">
+              <span>PDP numéro : {{ pdpNumber }}</span>
+            </div>
+            <div class="align_div">
+              <span>Lieu d'intervention : {{ interventionPlace }}</span>
+            </div>
           </td>
         </tr>
         
         <tr class="top">
           <td colspan="3" style="text-align: center; padding-top: 10px;">
-            <mat-grid-list cols="4" rowHeight="140px">
+            <mat-grid-list cols="4" rowHeight="90px">
               @for (tool of selectedTools; track tool) {
               <mat-grid-tile>
                 <mat-card class="example-card" appearance="outlined">
@@ -140,6 +146,42 @@
               </mat-grid-tile>
               }
             </mat-grid-list>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="table_operations">
+              <tbody>
+                <tr>
+                  <th>Opérations à réaliser </th>
+                  <th>Risques</th>
+                  <th>protections</th>
+                  <th>réalisation</th>
+                </tr>
+                  @for (op of ops; track op) {
+                    <tr class="top"> 
+                      <td class="" style="width:250px; text-align: center; padding-top: 10px;">
+                        {{op.name}}
+                      </td>
+                      <td class="table_td_operations" style="width:135px;">
+                        @for (mani of op.manipulation; track mani) {
+                          <span>  {{ mani.name }} </span>
+                        }
+                      </td>
+                      <td  class="table_td_operations" style="max-width:135px;">
+                        <div class="align_div">
+                          <ul>
+                            <li *ngFor="let mani of op.manipulation">{{ mani.risques }}</li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td class="table_td_operations" style="width:250px;">
+                        {{op.prevention}}
+                      </td>
+                    </tr>
+                  }
+              </tbody>
+            </table>
           </td>
         </tr>
       </tbody>
